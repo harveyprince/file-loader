@@ -1,6 +1,6 @@
 {
   "name": "file-loader",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "author": "Tobias Koppers @sokra",
   "description": "file loader module for webpack",
   "license": "MIT",
@@ -58,8 +58,8 @@
     "travis:coverage": "npm run test:coverage -- --runInBand",
     "webpack-defaults": "webpack-defaults"
   },
-  "repository": "https://github.com/webpack/file-loader.git",
-  "bugs": "https://github.com/webpack/file-loader/issues",
+  "repository": "https://github.com/harveyprince/file-loader.git",
+  "bugs": "https://github.com/harveyprince/file-loader/issues",
   "homepage": "https://webpack.js.org/loaders/file-loader",
   "pre-commit": "lint-staged",
   "lint-staged": {
