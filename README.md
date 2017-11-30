@@ -17,7 +17,7 @@
 <h2 align="center">Install</h2>
 
 ```bash
-npm install --save-dev file-loader
+npm install --save-dev @harveyprince/file-loader
 ```
 
 <h2 align="center"><a href="https://webpack.js.org/concepts/loaders">Usage</a></h2>
@@ -37,7 +37,7 @@ module.exports = {
         test: /\.(png|jpg|gif)$/,
         use: [
           {
-            loader: 'file-loader',
+            loader: '@harveyprince/file-loader',
             options: {}  
           }
         ]
@@ -60,6 +60,7 @@ Emits `file.png` as file in the output directory and returns the public URL
 |**`name`**|`{String\|Function}`|`[hash].[ext]`|Configure a custom filename template for your file|
 |**`context`**|`{String}`|`this.options.context`|Configure a custom file context, defaults to `webpack.config.js` [context](https://webpack.js.org/configuration/entry-context/#context)|
 |**`publicPath`**|`{String\|Function}`|[`__webpack_public_path__ `](https://webpack.js.org/api/module-variables/#__webpack_public_path__-webpack-specific-)|Configure a custom `public` path for your files|
+|**`publicPathWrapper`**|`{Function}`|`'undefined'`|Should be `function(){}` if you wish to dynamicly change the public path in the runtime|
 |**`outputPath`**|`{String\|Function}`|`'undefined'`|Configure a custom `output` path for your files|
 |**`useRelativePath`**|`{Boolean}`|`false`|Should be `true` if you wish to generate a `context` relative URL for each file|
 |**`emitFile`**|`{Boolean}`|`true`|By default a file is emitted, however this can be disabled if required (e.g. for server side packages)|
@@ -73,7 +74,7 @@ You can configure a custom filename template for your file using the query param
 **webpack.config.js**
 ```js
 {
-  loader: 'file-loader',
+  loader: '@harveyprince/file-loader',
   options: {
     name: '[path][name].[ext]'
   }  
@@ -85,7 +86,7 @@ You can configure a custom filename template for your file using the query param
 **webpack.config.js**
 ```js
 {
-  loader: 'file-loader',
+  loader: '@harveyprince/file-loader',
   options: {
     name (file) {
       if (env === 'development') {
@@ -125,7 +126,7 @@ By default, the path and name you specify will output the file in that same dire
 **webpack.config.js**
 ```js
 {
-  loader: 'file-loader',
+  loader: '@harveyprince/file-loader',
   options: {
     name: '[path][name].[ext]',
     context: ''
@@ -140,10 +141,26 @@ You can specify custom `output` and `public` paths by using `outputPath`, `publi
 **webpack.config.js**
 ```js
 {
-  loader: 'file-loader',
+  loader: '@harveyprince/file-loader',
   options: {
     name: '[path][name].[ext]',
     publicPath: 'assets/'
+  }  
+}
+```
+
+### `publicPathWrapper`
+
+**webpack.config.js**
+```js
+{
+  loader: '@harveyprince/file-loader',
+  options: {
+    name: '[path][name].[ext]',
+    publicPath: 'assets/',
+    publicPathWrapper: function(path){
+      return window.location.protocol + '//' + path;
+    }
   }  
 }
 ```
@@ -153,7 +170,7 @@ You can specify custom `output` and `public` paths by using `outputPath`, `publi
 **webpack.config.js**
 ```js
 {
-  loader: 'file-loader',
+  loader: '@harveyprince/file-loader',
   options: {
     name: '[path][name].[ext]',
     outputPath: 'images/'
@@ -167,7 +184,7 @@ You can specify custom `output` and `public` paths by using `outputPath`, `publi
 
 ```js
 {
-  loader: 'file-loader',
+  loader: '@harveyprince/file-loader',
   options: {
     useRelativePath: process.env.NODE_ENV === "production"
   }
@@ -184,7 +201,7 @@ import img from './file.png'
 
 ```js
 {
-  loader: 'file-loader',
+  loader: '@harveyprince/file-loader',
   options: {
     emitFile: false
   }  
@@ -207,7 +224,7 @@ import png from 'image.png'
 **webpack.config.js**
 ```js
 {
-  loader: 'file-loader',
+  loader: '@harveyprince/file-loader',
   options: {
     name: 'dirname/[hash].[ext]'
   }  
@@ -221,7 +238,7 @@ dirname/0dcbbaa701328ae351f.png
 **webpack.config.js**
 ```js
 {
-  loader: 'file-loader',
+  loader: '@harveyprince/file-loader',
   options: {
     name: '[sha512:hash:base64:7].[ext]'
   }  
@@ -239,7 +256,7 @@ import png from 'path/to/file.png'
 **webpack.config.js**
 ```js
 {
-  loader: 'file-loader',
+  loader: '@harveyprince/file-loader',
   options: {
     name: '[path][name].[ext]?[hash]'
   }  

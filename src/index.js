@@ -66,6 +66,16 @@ export default function loader(content) {
     this.emitFile(outputPath, content);
   }
   // TODO revert to ES2015 Module export, when new CSS Pipeline is in place
+  if (options.publicPathWrapper !== undefined) {
+    let wrapper = '';
+    if (typeof options.publicPathWrapper === 'function') {
+      wrapper = options.publicPathWrapper.toString();
+    } else {
+      wrapper = options.publicPathWrapper;
+    }
+    // a function to adjust the public path dynamicly
+    return `module.exports = (${wrapper})(${publicPath});`;
+  }
   return `module.exports = ${publicPath};`;
 }
 
